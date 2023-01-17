@@ -36,3 +36,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# References
+
+[Building a REST API with NestJS and Prisma](https://www.prisma.io/blog/nestjs-prisma-rest-api-7D056s1BmOL0)
+
+[next-swagger-doc](https://www.npmjs.com/package/next-swagger-doc)
+
+[Next.js Tutorial for Beginners](https://www.youtube.com/playlist?list=PLC3y8-rFHvwgC9mj0qv972IO5DmD-H0ZH)
+
+[Learn Prisma In 60 Minutes](https://www.youtube.com/watch?v=RebA5J-rlwg)
+
+[SQL Refresher + Exercises](https://github.com/WebDevSimplified/Learn-SQL)
+
+[PostgreSQL Tutorial Full Course 2022](https://www.youtube.com/watch?v=85pG_pDkITY)
