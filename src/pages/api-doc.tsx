@@ -20,6 +20,8 @@ export const getStaticProps: GetStaticProps = async () => {
         version: '1.0',
       },
     },
+    apiFolder: 'src/pages/api',
+    schemaFolders: ['src/models'],
   })
 
   return {

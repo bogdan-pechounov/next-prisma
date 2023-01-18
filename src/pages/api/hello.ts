@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
@@ -9,6 +8,8 @@ type Data = {
  * @swagger
  * /api/hello:
  *   get:
+ *     tags:
+ *       - hello
  *     description: Returns the hello world
  *     responses:
  *       200:
