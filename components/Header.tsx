@@ -1,3 +1,4 @@
+// Header.tsx
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
 
         a {
           text-decoration: none;
-          color: #000;
+          color: var(--geist-foreground);
           display: inline-block;
         }
 
@@ -72,7 +73,7 @@ const Header: React.FC = () => {
     )
     right = (
       <div className='right'>
-        <p>Validating session...</p>
+        <p>Validating session ...</p>
         <style jsx>{`
           .right {
             margin-left: auto;
@@ -81,6 +82,7 @@ const Header: React.FC = () => {
       </div>
     )
   }
+
   if (!session) {
     right = (
       <div className='right'>
@@ -191,6 +193,7 @@ const Header: React.FC = () => {
       </div>
     )
   }
+
   return (
     <nav>
       {left}
