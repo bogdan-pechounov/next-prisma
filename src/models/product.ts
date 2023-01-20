@@ -2,19 +2,16 @@
  * @swagger
  * components:
  *  schemas:
- *    Article:
+ *    Product:
  *      type: object
  *      properties:
  *        title:
- *          type: string
- *        body:
  *          type: string
  *        description:
  *          type: string
  */
 
-export interface Article {
+export interface Product {
   title: string
-  body: string
   description: string
 }

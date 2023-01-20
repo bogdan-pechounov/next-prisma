@@ -1,8 +1,10 @@
-//singleton prisma client
 import { PrismaClient } from '@prisma/client'
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
+/**
+ * Singleton prisma client
+ */
 const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
