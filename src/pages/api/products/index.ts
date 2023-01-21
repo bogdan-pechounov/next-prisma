@@ -35,13 +35,13 @@ export default async function handler(
     res.status(200).json(products)
   } else if (req.method === 'POST') {
     const { title, description } = req.body
-    const product = await prisma.product.create({
-      data: {
-        title,
-        description,
-        imgUrl: '', //todo
-      },
-    })
-    res.status(201).json(product)
+    // const product = await prisma.product.create({
+    //   data: {
+    //     title,
+    //     description,
+    //     imgUrl: '', //todo
+    //   },
+    // })
+    res.status(201).json({})
   }
 }

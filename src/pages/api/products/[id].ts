@@ -5,11 +5,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { productId } = req.query
-  if (typeof productId !== 'string') {
+  const { id } = req.query
+  if (typeof id !== 'string') {
     return res.status(400).send('Incorrect type')
   }
-  const id = parseInt(productId)
 
   if (req.method === 'GET') {
     const article = await prisma.product.findUnique({

@@ -1,35 +1,25 @@
+import LinearIndeterminate from '@/components/LinearIndeterminate'
 import prisma from '@/lib/prisma'
 import { Product } from '@prisma/client'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import { useRouter } from 'next/router'
 
 type ProductDetailsProps = {
   product: Product
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
-  return <div>{product.title}</div>
-}
+  const router = useRouter()
 
-function parseId(id: string | undefined) {
-  if (id) {
-    const parsedId = parseInt(id)
-    if (!isNaN(parsedId)) {
-      return parsedId
-    }
-  }
+  if (router.isFallback) return <LinearIndeterminate />
+  return <div>{product.title}</div>
 }
 
 export const getStaticProps: GetStaticProps<
   ProductDetailsProps,
   { id: string }
 > = async (context) => {
-  //parse id
-  const id = parseId(context.params?.id)
-  if (!id) {
-    return {
-      notFound: true,
-    }
-  }
+  const id = context.params?.id
   //get product
   const product = await prisma.product.findUnique({
     where: {
@@ -54,6 +44,6 @@ export const getStaticProps: GetStaticProps<
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: true,
   }
 }
