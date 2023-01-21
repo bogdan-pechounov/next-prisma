@@ -10,3 +10,9 @@ export function parseQueryInt(
   }
   return defaultValue
 }
+
+export function parseQueryString(string: string | string[] | undefined) {
+  if (typeof string === 'string') {
+    return string
+  }
+}

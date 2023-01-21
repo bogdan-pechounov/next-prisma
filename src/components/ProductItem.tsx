@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
+import Box from '@mui/material/Box'
 import CardActionArea from '@mui/material/CardActionArea'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -9,6 +10,8 @@ import { Product } from '@prisma/client'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import styles from '@/styles/Product.module.css'
+import Image from 'next/image'
 
 type ProductItemProps = {
   product: Product
@@ -20,13 +23,24 @@ function ProductItem({ product }: ProductItemProps) {
   return (
     <Card>
       <Link href={'/product/' + product.id}>
-        <CardMedia
-          image={product.imgUrl}
-          sx={{ maxHeight: 300, objectFit: 'contain' }}
-          component='img'
-        />
+        <Box height={300} position='relative'>
+          <Image
+            src={product.imgUrl}
+            alt={product.title}
+            fill
+            style={{ objectFit: 'contain' }}
+            blurDataURL={product.imgUrl}
+            placeholder='blur'
+            sizes='(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw'
+            // priority
+          />
+        </Box>
         <CardContent>
-          <Typography variant='h6'>{product.title}</Typography>
+          <Typography variant='h6' className={styles['max-lines']}>
+            {product.title}
+          </Typography>
         </CardContent>
       </Link>
       <CardActions>

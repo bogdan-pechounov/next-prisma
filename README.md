@@ -1,4 +1,4 @@
-
+Practice using [Next.js](https://nextjs.org/), [Prisma](https://nextjs.org/) with [PostgreSQL](https://www.postgresql.org/) and [React Material UI](https://mui.com/).
 
 # References
 
