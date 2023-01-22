@@ -3,6 +3,9 @@ import prisma from '@/lib/prisma'
 import { Product } from '@prisma/client'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
+import { Box, Container, Stack } from '@mui/system'
+import { Typography, Button } from '@mui/material'
+import Image from 'next/image'
 
 type ProductDetailsProps = {
   product: Product
@@ -11,8 +14,32 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter()
 
+  //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
-  return <div>{product.title}</div>
+
+  return (
+    <Container>
+      <Stack direction={{ xs: 'column', sm: 'row' }}>
+        <Box flex='1 1 40%' position='relative' minHeight={300}>
+          <Image
+            src={product.imgUrl}
+            alt={product.title}
+            fill
+            style={{ objectFit: 'contain' }}
+            sizes='(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw'
+          />
+        </Box>
+        <Box flex='1 1 60%'>
+          <Typography variant='h4'>{product.title}</Typography>
+          <Typography>{product.brand}</Typography>
+          <Typography>{product.description}</Typography>
+          <Button variant='outlined'>Add to cart</Button>
+        </Box>
+      </Stack>
+    </Container>
+  )
 }
 
 export const getStaticProps: GetStaticProps<
@@ -32,7 +59,7 @@ export const getStaticProps: GetStaticProps<
       notFound: true,
     }
   }
-
+  //revalidate
   return {
     props: {
       product,
@@ -43,7 +70,7 @@ export const getStaticProps: GetStaticProps<
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: [], //todo
     fallback: true,
   }
 }

@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { query } from 'express'
+import { parseQueryString } from '@/lib/utils'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -47,7 +48,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchBar() {
   const router = useRouter()
-  const [search, setSearch] = useState(router.query.search ?? '')
+  const [search, setSearch] = useState(
+    parseQueryString(router.query.search) ?? ''
+  )
 
   useEffect(() => {
     if (search) {
@@ -55,7 +58,6 @@ function SearchBar() {
     } else {
       const { query } = router
       delete query.search
-      console.log(router.query)
       router.push({ query })
     }
   }, [search])

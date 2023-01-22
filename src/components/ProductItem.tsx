@@ -34,7 +34,7 @@ function ProductItem({ product }: ProductItemProps) {
             sizes='(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw'
-            // priority
+            // todo why image resizes after load
           />
         </Box>
         <CardContent>
