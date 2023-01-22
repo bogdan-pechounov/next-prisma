@@ -4,22 +4,17 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import Badge from '@mui/material/Badge'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Link from 'next/link'
 import SearchBar from './SearchBar'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/lib/store'
+import CartDrawer from './CartDrawer'
+import CartIcon from './CartIcon'
 
 export default function Navbar() {
-  const count = useSelector((state: RootState) => state.counter.value)
-  console.log(count)
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -84,12 +79,8 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={count} color='error'>
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <CartIcon />
+        <p>Shopping Cart</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -132,11 +123,7 @@ export default function Navbar() {
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size='large' aria-label='shopping cart' color='inherit'>
-              <Badge badgeContent={count} color='error'>
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <CartDrawer />
             <IconButton
               size='large'
               edge='end'

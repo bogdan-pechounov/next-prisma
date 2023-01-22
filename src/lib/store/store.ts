@@ -1,5 +1,5 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import counterReducer from './counterSlide'
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from './counterSlice'
 
 export const store = configureStore({
   reducer: {

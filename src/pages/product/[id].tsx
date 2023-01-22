@@ -7,7 +7,7 @@ import { Box, Container, Stack } from '@mui/system'
 import { Typography, Button } from '@mui/material'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
-import { increment } from '@/lib/counterSlide'
+import { increment } from '@/lib/store/counterSlice'
 
 type ProductDetailsProps = {
   product: Product

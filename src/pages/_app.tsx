@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import { store } from '@/lib/store'
+import { store } from '@/lib/store/store'
 import '@/styles/globals.css'
 import { theme } from '@/theme'
 import { ThemeProvider } from '@emotion/react'
