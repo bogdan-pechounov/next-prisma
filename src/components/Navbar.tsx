@@ -9,13 +9,17 @@ import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import MailIcon from '@mui/icons-material/Mail'
-import NotificationsIcon from '@mui/icons-material/Notifications'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Link from 'next/link'
 import SearchBar from './SearchBar'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/lib/store'
 
 export default function Navbar() {
+  const count = useSelector((state: RootState) => state.counter.value)
+  console.log(count)
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -81,23 +85,11 @@ export default function Navbar() {
     >
       <MenuItem>
         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
-            <MailIcon />
+          <Badge badgeContent={count} color='error'>
+            <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size='large'
-          aria-label='show 17 new notifications'
-          color='inherit'
-        >
-          <Badge badgeContent={17} color='error'>
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -140,22 +132,9 @@ export default function Navbar() {
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 4 new mails'
-              color='inherit'
-            >
-              <Badge badgeContent={4} color='error'>
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size='large'
-              aria-label='show 17 new notifications'
-              color='inherit'
-            >
-              <Badge badgeContent={17} color='error'>
-                <NotificationsIcon />
+            <IconButton size='large' aria-label='shopping cart' color='inherit'>
+              <Badge badgeContent={count} color='error'>
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton

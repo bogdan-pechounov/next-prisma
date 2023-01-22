@@ -3,7 +3,6 @@ import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { query } from 'express'
 import { parseQueryString } from '@/lib/utils'
 
 const Search = styled('div')(({ theme }) => ({
@@ -48,14 +47,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchBar() {
   const router = useRouter()
-  const [search, setSearch] = useState(
-    parseQueryString(router.query.search) ?? ''
-  )
+  const searchQuery = parseQueryString(router.query.search)
+  const [search, setSearch] = useState(searchQuery ?? '')
 
   useEffect(() => {
     if (search) {
-      router.push({ query: { ...router.query, search } })
-    } else {
+      router.push({ pathname: '/', query: { ...router.query, search } })
+    } else if (searchQuery) {
+      //delete search query in url
       const { query } = router
       delete query.search
       router.push({ query })

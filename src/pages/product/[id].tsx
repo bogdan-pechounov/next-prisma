@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { Box, Container, Stack } from '@mui/system'
 import { Typography, Button } from '@mui/material'
 import Image from 'next/image'
+import { useDispatch } from 'react-redux'
+import { increment } from '@/lib/counterSlide'
 
 type ProductDetailsProps = {
   product: Product
@@ -13,6 +15,7 @@ type ProductDetailsProps = {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
@@ -35,7 +38,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <Typography variant='h4'>{product.title}</Typography>
           <Typography>{product.brand}</Typography>
           <Typography>{product.description}</Typography>
-          <Button variant='outlined'>Add to cart</Button>
+          <Button variant='outlined' onClick={() => dispatch(increment())}>
+            Add to cart
+          </Button>
         </Box>
       </Stack>
     </Container>
