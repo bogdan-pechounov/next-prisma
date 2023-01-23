@@ -12,5 +12,14 @@ export function useCart() {
     () => Object.values(cart.products),
     [cart.products]
   )
-  return { cart, productArray }
+  const totalPrice = useMemo(
+    () =>
+      productArray.reduce(
+        (accumulator, product) =>
+          accumulator + product.price * product.quantity,
+        0
+      ),
+    [productArray]
+  )
+  return { cart, productArray, totalPrice }
 }

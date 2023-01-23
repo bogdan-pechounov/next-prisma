@@ -58,6 +58,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </Box>
         <Box flex='1 1 60%'>
           <Typography variant='h4'>{product.title}</Typography>
+          <Typography>Price: {product.price}</Typography>
           <Typography>{product.brand}</Typography>
           <Typography>{product.description}</Typography>
           <AddToCart />
