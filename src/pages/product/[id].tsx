@@ -11,7 +11,12 @@ import cartSlice from '@/lib/store/cartSlice'
 import { useCart } from '@/lib/store/hooks'
 
 type ProductDetailsProps = {
-  product: Product
+  product: Product & {
+    alsoBought: Product[]
+    alsoViewed: Product[]
+    boughtTogether: Product[]
+    buyAfterViewing: Product[]
+  }
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
@@ -21,6 +26,13 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
   //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
+
+  console.log(
+    product.alsoBought,
+    product.alsoViewed,
+    product.boughtTogether,
+    product.buyAfterViewing
+  )
 
   function AddToCart() {
     if (product.id in cart.products) {
@@ -64,6 +76,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <AddToCart />
         </Box>
       </Stack>
+      {/* Related */}
+      <Stack direction='row'>{product.salesRank?.toString()}</Stack>
     </Container>
   )
 }
@@ -77,6 +91,12 @@ export const getStaticProps: GetStaticProps<
   const product = await prisma.product.findUnique({
     where: {
       id,
+    },
+    include: {
+      alsoBought: true,
+      alsoViewed: true,
+      boughtTogether: true,
+      buyAfterViewing: true,
     },
   })
   //not found

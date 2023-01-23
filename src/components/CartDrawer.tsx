@@ -17,7 +17,7 @@ function CartDrawer() {
   const [open, setOpen] = useState(false)
   const { productArray, totalPrice } = useCart()
   const dispatch = useAppDispatch()
-  console.log(productArray)
+
   return (
     <>
       <CartIcon onClick={() => setOpen(true)} />

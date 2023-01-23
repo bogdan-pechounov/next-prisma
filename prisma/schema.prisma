@@ -12,12 +12,20 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(uuid())
-  title       String
-  imgUrl      String
-  description String
-  price       Float
-  categories  String[]
-  brand       String
-  salesRank   Json?
+  id               String    @id @default(uuid())
+  title            String
+  imgUrl           String
+  description      String
+  price            Float
+  categories       String[]
+  brand            String
+  salesRank        Json?
+  alsoBought       Product[] @relation("alsoBought")
+  alsoBought_      Product[] @relation("alsoBought")
+  alsoViewed       Product[] @relation("alsoViewed")
+  alsoViewed_      Product[] @relation("alsoViewed")
+  boughtTogether   Product[] @relation("boughtTogether")
+  boughtTogether_  Product[] @relation("boughtTogether")
+  buyAfterViewing  Product[] @relation("buyAfterViewing")
+  buyAfterViewing_ Product[] @relation("buyAfterViewing")
 }
