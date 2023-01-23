@@ -7,7 +7,8 @@ import { Box, Container, Stack } from '@mui/system'
 import { Typography, Button } from '@mui/material'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
-import { increment } from '@/lib/store/counterSlice'
+import cartSlice from '@/lib/store/cartSlice'
+import { useCart } from '@/lib/store/hooks'
 
 type ProductDetailsProps = {
   product: Product
@@ -16,10 +17,31 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter()
   const dispatch = useDispatch()
+  const { cart } = useCart()
 
   //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
 
+  function AddToCart() {
+    if (product.id in cart.products) {
+      return (
+        <Button
+          variant='outlined'
+          onClick={() => dispatch(cartSlice.actions.remove(product))}
+        >
+          Remove from cart
+        </Button>
+      )
+    }
+    return (
+      <Button
+        variant='outlined'
+        onClick={() => dispatch(cartSlice.actions.add(product))}
+      >
+        Add to cart
+      </Button>
+    )
+  }
   return (
     <Container>
       <Stack direction={{ xs: 'column', sm: 'row' }}>
@@ -38,9 +60,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <Typography variant='h4'>{product.title}</Typography>
           <Typography>{product.brand}</Typography>
           <Typography>{product.description}</Typography>
-          <Button variant='outlined' onClick={() => dispatch(increment())}>
-            Add to cart
-          </Button>
+          <AddToCart />
         </Box>
       </Stack>
     </Container>

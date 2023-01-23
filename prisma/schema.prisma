@@ -16,6 +16,8 @@ model Product {
   title       String
   imgUrl      String
   description String
+  price       Float
   categories  String[]
   brand       String
+  salesRank   Json?
 }
