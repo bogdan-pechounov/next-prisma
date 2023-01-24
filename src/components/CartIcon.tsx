@@ -1,15 +1,14 @@
 import IconButton from '@mui/material/IconButton'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/lib/store/store'
 import { Badge } from '@mui/material'
+import { useCart } from '@/lib/store/hooks'
 
 type CartIconProps = {
   onClick?: React.MouseEventHandler
 }
 
 function CartIcon({ onClick }: CartIconProps) {
-  const count = useSelector((state: RootState) => state.counter.value)
+  const { productArray } = useCart()
   return (
     <IconButton
       size='large'
@@ -17,7 +16,7 @@ function CartIcon({ onClick }: CartIconProps) {
       color='inherit'
       onClick={onClick}
     >
-      <Badge badgeContent={count} color='error'>
+      <Badge badgeContent={productArray.length} color='error'>
         <ShoppingCartIcon />
       </Badge>
     </IconButton>
