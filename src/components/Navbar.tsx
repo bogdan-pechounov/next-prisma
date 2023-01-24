@@ -13,8 +13,12 @@ import Link from 'next/link'
 import SearchBar from './SearchBar'
 import CartDrawer from './CartDrawer'
 import CartIcon from './CartIcon'
+import { signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
 
 export default function Navbar() {
+  const { data: session, status } = useSession()
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -56,8 +60,26 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {status === 'authenticated' ? (
+        [
+          <MenuItem key={1} onClick={handleMenuClose}>
+            Profile
+          </MenuItem>,
+          <MenuItem
+            key={2}
+            onClick={() => {
+              handleMenuClose()
+              signOut()
+            }}
+          >
+            Sign out
+          </MenuItem>,
+        ]
+      ) : (
+        <MenuItem onClick={handleMenuClose}>
+          <Link href='/api/auth/signin'>Sign in</Link>
+        </MenuItem>
+      )}
     </Menu>
   )
 
@@ -110,6 +132,7 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+          {/* Brand name */}
           <Link href='/'>
             <Typography
               variant='h6'
@@ -120,10 +143,12 @@ export default function Navbar() {
               E-LECTRONICS
             </Typography>
           </Link>
+          {/* Search bar */}
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <CartDrawer />
+            {/* Profile icon */}
             <IconButton
               size='large'
               edge='end'
@@ -133,7 +158,17 @@ export default function Navbar() {
               onClick={handleProfileMenuOpen}
               color='inherit'
             >
-              <AccountCircle />
+              {session?.user?.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={'profile picture'}
+                  width={20}
+                  height={20}
+                  style={{ borderRadius: '50%' }}
+                ></Image>
+              ) : (
+                <AccountCircle />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

@@ -9,6 +9,9 @@ import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 import cartSlice from '@/lib/store/cartSlice'
 import { useCart } from '@/lib/store/hooks'
+import ProductItem from '@/components/ProductItem'
+import { SwiperSlide, Swiper } from 'swiper/react'
+import { Keyboard, Mousewheel } from 'swiper'
 
 type ProductDetailsProps = {
   product: Product & {
@@ -77,7 +80,20 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </Box>
       </Stack>
       {/* Related */}
-      <Stack direction='row'>{product.salesRank?.toString()}</Stack>
+      <Swiper
+        modules={[Keyboard, Mousewheel]}
+        grabCursor={true}
+        spaceBetween={10}
+        slidesPerView={'auto'}
+        keyboard={{ enabled: true, onlyInViewport: true }}
+        mousewheel={{ forceToAxis: true }}
+      >
+        {product.alsoBought.map((product) => (
+          <SwiperSlide key={product.id} style={{ width: '300px' }}>
+            <ProductItem product={product} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Container>
   )
 }

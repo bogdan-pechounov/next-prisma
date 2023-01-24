@@ -1,14 +1,11 @@
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
-import CardActionArea from '@mui/material/CardActionArea'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Product } from '@prisma/client'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
 import styles from '@/styles/Product.module.css'
 import Image from 'next/image'
@@ -18,8 +15,6 @@ type ProductItemProps = {
 }
 
 function ProductItem({ product }: ProductItemProps) {
-  const router = useRouter()
-
   return (
     <Card>
       <Link href={'/product/' + product.id}>
@@ -43,10 +38,7 @@ function ProductItem({ product }: ProductItemProps) {
           </Typography>
         </CardContent>
       </Link>
-      <CardActions>
-        <Button size='small'>Share</Button>
-        <Button size='small'>Learn More</Button>
-      </CardActions>
+      <CardActions></CardActions>
     </Card>
   )
 }
