@@ -52,7 +52,10 @@ function SearchBar() {
 
   useEffect(() => {
     if (search) {
-      router.push({ pathname: '/', query: { ...router.query, search } })
+      router.push({
+        pathname: '/search',
+        query: { q: search },
+      })
     } else if (searchQuery) {
       //delete search query in url
       const { query } = router
