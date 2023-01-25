@@ -3,7 +3,7 @@ import ProductItem from '@/components/ProductItem'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import { Keyboard, Mousewheel } from 'swiper'
 import { Product } from '@prisma/client'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 type ProductRowProps = {
   title: String
@@ -26,7 +26,9 @@ function ProductRow({ title, products }: ProductRowProps) {
       >
         {products.map((product) => (
           <SwiperSlide key={product.id} style={{ width: '300px' }}>
-            <ProductItem product={product} />
+            <Box p={1}>
+              <ProductItem product={product} />
+            </Box>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import cartSlice from '@/lib/store/cartSlice'
 import { useCart } from '@/lib/store/hooks'
 import ProductRow from '@/components/ProductRow'
+import Head from 'next/head'
 
 type ProductDetailsProps = {
   product: Product & {
@@ -52,6 +53,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   }
   return (
     <Container>
+      <Head>
+        <title>{product.title}</title>
+      </Head>
       <Stack direction={{ xs: 'column', sm: 'row' }}>
         <Box flex='1 1 40%' position='relative' minHeight={300}>
           <Image

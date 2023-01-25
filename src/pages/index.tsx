@@ -2,9 +2,10 @@ import Banner from '@/components/Banner'
 import LinearIndeterminate from '@/components/LinearIndeterminate'
 import ProductRow from '@/components/ProductRow'
 import prisma from '@/lib/prisma'
-import { Container } from '@mui/material'
+import { Box, Container, styled } from '@mui/material'
 import { Product } from '@prisma/client'
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 type Props = {
@@ -37,12 +38,15 @@ const POPULAR_CATEGORIES = [
   'Cases & Sleeves',
   'Car Electronics',
 ]
+
 export default function Home({ bannerProduct, categories }: Props) {
   return (
     <Container>
       {bannerProduct && <Banner bannerProduct={bannerProduct} />}
       {categories.map(({ category, products }) => (
-        <ProductRow key={category} title={category} products={products} />
+        <Box key={category} mb={2}>
+          <ProductRow title={category} products={products} />
+        </Box>
       ))}
     </Container>
   )

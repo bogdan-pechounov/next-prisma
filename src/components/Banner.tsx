@@ -1,7 +1,5 @@
-import { useTheme } from '@emotion/react'
-import { Box, styled, Typography } from '@mui/material'
+import { Box, styled, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { Stack } from '@mui/system'
 import { Product } from '@prisma/client'
 import Image from 'next/image'
@@ -11,8 +9,10 @@ type Props = {
   bannerProduct: Product
 }
 
-const BannerContainer = styled(Box)(() => ({
-  background: grey[200],
+const BannerContainer = styled(Box)(({ theme }) => ({
+  background: theme.palette.primary.light,
+  color: 'white',
+  borderRadius: '5px 20px 20px 5px',
 }))
 
 const BannerContent = styled(Stack)(({ theme }) => ({
@@ -42,8 +42,13 @@ function Banner({ bannerProduct }: Props) {
             width={width}
             height={width}
             alt={bannerProduct?.title}
-            style={{ mixBlendMode: 'multiply' }} // make background transparent
+            // style={{ mixBlendMode: 'multiply' }} // make background transparent
             priority
+            style={{
+              borderRadius: '10px',
+              padding: '10px',
+              background: 'white',
+            }}
           />
         </Box>
         <Box>
