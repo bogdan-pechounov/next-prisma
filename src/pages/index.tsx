@@ -1,79 +1,81 @@
-import ProductItem from '@/components/ProductItem'
+import Banner from '@/components/Banner'
+import LinearIndeterminate from '@/components/LinearIndeterminate'
+import ProductRow from '@/components/ProductRow'
 import prisma from '@/lib/prisma'
-import { parseQueryInt, parseQueryString } from '@/lib/utils'
-import { Container, Grid, Pagination, PaginationItem } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Container, styled } from '@mui/material'
 import { Product } from '@prisma/client'
 import { GetServerSideProps } from 'next'
-import Link from 'next/link'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-const NUM_ITEMS_PER_PAGE = 15
-
 type Props = {
-  products: Product[]
-  numPages: number
+  bannerProduct: Product | null
+  categories: {
+    category: string
+    products: Product[]
+  }[]
 }
 
-export default function Home({ products, numPages }: Props) {
-  const { pathname, query } = useRouter()
-  const page = parseQueryInt(query.page, 1)
+const POPULAR_CATEGORIES = [
+  'Electronics',
+  'Computers & Accessories',
+  'Camera & Photo',
+  'Accessories & Supplies',
+  'Laptop & Netbook Computer Accessories',
+  'Cables & Accessories',
+  'Audio & Video Accessories',
+  'Accessories',
+  'Batteries',
+  'Cables & Interconnects',
+  'Car & Vehicle Electronics',
+  'Computer Components',
+  'Chargers & Adapters',
+  'Cases',
+  'Portable Audio & Video',
+  'Touch Screen Tablet Accessories',
+  'Bags & Cases',
+  'MP3 Players & Accessories',
+  'Cases & Sleeves',
+  'Car Electronics',
+]
+
+export default function Home({ bannerProduct, categories }: Props) {
   return (
     <Container>
-      <Grid container spacing={2} style={{ justifyContent: 'center' }}>
-        {products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-            <ProductItem product={product} />
-          </Grid>
-        ))}
-      </Grid>
-      <Box mt={2} display={'flex'} justifyContent={'center'}>
-        <Pagination
-          count={numPages}
-          page={page}
-          renderItem={(item) => (
-            <Link href={{ pathname, query: { ...query, page: item.page } }}>
-              <PaginationItem {...item} />
-            </Link>
-          )}
-        />
-      </Box>
+      {bannerProduct && <Banner bannerProduct={bannerProduct} />}
+      {categories.map(({ category, products }) => (
+        <Box key={category} mb={2}>
+          <ProductRow title={category} products={products} />
+        </Box>
+      ))}
     </Container>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  const { page } = context.query
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const [bannerProduct, categories] = await Promise.all([
+    prisma.product.findUnique({
+      where: { id: 'B00KYB9Q64' },
+    }),
+    Promise.all(
+      POPULAR_CATEGORIES.map(async (category) => ({
+        category,
+        products: await prisma.product.findMany({
+          where: {
+            categories: {
+              has: category,
+            },
+          },
+          take: 20,
+        }),
+      }))
+    ),
+  ])
 
-  const skip = (parseQueryInt(page, 1) - 1) * NUM_ITEMS_PER_PAGE
-  const search = parseQueryString(context.query.search)
-    ?.split(' ')
-    .filter((i) => i) //empty strings are falsy and will be filtered out so you don't get "word1 " => "word1 & "
-    .join(' & ') // "word1 word2" becomes "word1 & word2" which respects postgresql syntax
-
-  const numPages = Math.ceil(
-    (await prisma.product.count({
-      where: {
-        title: { search },
-      },
-    })) / NUM_ITEMS_PER_PAGE
-  )
-
-  const products = await prisma.product.findMany({
-    skip,
-    take: NUM_ITEMS_PER_PAGE,
-    where: {
-      title: {
-        search,
-      },
-    },
-  })
   return {
     props: {
-      products,
-      numPages,
+      bannerProduct,
+      categories,
     },
   }
 }

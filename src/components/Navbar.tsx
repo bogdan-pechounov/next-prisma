@@ -19,6 +19,7 @@ import Image from 'next/image'
 export default function Navbar() {
   const { data: session, status } = useSession()
 
+  //#region menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null)
@@ -42,7 +43,9 @@ export default function Navbar() {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
+  //#endregion
 
+  //#region profile menu
   const menuId = 'primary-search-account-menu'
   const renderMenu = (
     <Menu
@@ -82,6 +85,7 @@ export default function Navbar() {
       )}
     </Menu>
   )
+  //#endregion
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
