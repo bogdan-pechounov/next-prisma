@@ -16,10 +16,13 @@ function CartDrawer() {
 
   //load cart items
   useEffect(() => {
-    axios.get('/api/cart').then(({ data: cart }) => {
-      console.log(cart)
-      dispatch(cartSlice.actions.set(cart))
-    })
+    axios
+      .get('/api/cart')
+      .then(({ data: cart }) => {
+        console.log(cart)
+        dispatch(cartSlice.actions.set(cart))
+      })
+      .catch((err) => console.log(err))
   }, [])
 
   return (
