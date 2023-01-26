@@ -33,7 +33,9 @@ function CartDrawer() {
             ))}
           </List>
           <Divider />
-          <Typography>Total price: {formatPrice(totalPrice)}</Typography>
+          <Typography variant='subtitle1'>
+            Total price: {formatPrice(totalPrice)}
+          </Typography>
         </Box>
       </Drawer>
     </>

@@ -11,6 +11,8 @@ import cartSlice from '@/lib/store/cartSlice'
 import { useCart } from '@/lib/store/hooks'
 import ProductRow from '@/components/ProductRow'
 import Head from 'next/head'
+import { formatPrice } from '@/lib/format'
+import Link from 'next/link'
 
 type ProductDetailsProps = {
   product: Product & {
@@ -48,23 +50,31 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       <Head>
         <title>{product.title}</title>
       </Head>
-      <Stack direction={{ xs: 'column', sm: 'row' }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} mb={3}>
         <Box flex='1 1 40%' position='relative' minHeight={300}>
+          {/* Image */}
           <Image
             src={product.imgUrl}
             alt={product.title}
             fill
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: 'contain', padding: '10px' }}
             sizes='(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw'
           />
         </Box>
         <Box flex='1 1 60%'>
+          {/* Details */}
           <Typography variant='h4'>{product.title}</Typography>
-          <Typography>Price: {product.price}</Typography>
-          <Typography>{product.brand}</Typography>
-          <Typography>{product.description}</Typography>
+          <Typography variant='subtitle2'>
+            <Link href={`/search?brand=${product.brand}`}>{product.brand}</Link>
+          </Typography>
+          <Typography variant='subtitle1' mb={2}>
+            {formatPrice(product.price)}
+          </Typography>
+          <Typography variant='body1' mb={1}>
+            {product.description}
+          </Typography>
           <AddToCart />
         </Box>
       </Stack>

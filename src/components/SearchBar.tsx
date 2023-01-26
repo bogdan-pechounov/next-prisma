@@ -54,7 +54,7 @@ function SearchBar() {
     if (search) {
       router.push({
         pathname: '/search',
-        query: { q: search },
+        query: { ...router.query, q: search, page: 1 },
       })
     } else if (searchQuery) {
       //delete search query in url

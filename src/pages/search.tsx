@@ -51,11 +51,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     ?.split(' ')
     .filter((i) => i) //empty strings are falsy and will be filtered out so you don't get "word1 " => "word1 & "
     .join(' & ') // "word1 word2" becomes "word1 & word2" which respects postgresql syntax
+  const brand = parseQueryString(context.query.brand)
 
   const numPages = Math.ceil(
     (await prisma.product.count({
       where: {
         title: { search },
+        brand,
       },
     })) / NUM_ITEMS_PER_PAGE
   )
@@ -67,6 +69,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       title: {
         search,
       },
+      brand,
     },
   })
   return {
