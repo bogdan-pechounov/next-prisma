@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { clamp, parseQueryInt, parseQueryString } from '@/lib/utils'
+import { clamp, parseQueryString } from '@/lib/utils'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 
@@ -19,6 +19,7 @@ export default async function handler(
         productId,
       },
     })
+    //delete cart item
     await prisma.cartItem.delete({ where: { id: cartItem?.id } })
     res.status(200).send('Item deleted')
   } else if (req.method === 'PUT') {

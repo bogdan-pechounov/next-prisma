@@ -1,7 +1,7 @@
 import { Product } from '@prisma/client'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface CartItem {
+export interface CartItem {
   product: Product
   quantity: number
 }

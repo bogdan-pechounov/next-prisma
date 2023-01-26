@@ -1,22 +1,17 @@
+import { formatPrice } from '@/lib/format'
 import cartSlice from '@/lib/store/cartSlice'
-import { useAppDispatch, useAppSelector, useCart } from '@/lib/store/hooks'
-import {
-  Button,
-  ButtonGroup,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@mui/material'
+import { useAppDispatch, useCart } from '@/lib/store/hooks'
+import { List, Typography, Divider } from '@mui/material'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import CartDrawerItem from './CartDrawerItem'
 import CartIcon from './CartIcon'
 
 function CartDrawer() {
   const [open, setOpen] = useState(false)
-  const { productArray, totalPrice, remove, increase, decrease } = useCart()
+  const { productArray, totalPrice } = useCart()
   const dispatch = useAppDispatch()
 
   //load cart items
@@ -33,23 +28,12 @@ function CartDrawer() {
       <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
         <Box width={500}>
           <List>
-            {productArray.map(({ product, quantity }) => (
-              <ListItem key={product.id}>
-                <ListItemText
-                  primary={`${product.title} | ${product.price} | ${quantity}`}
-                />
-                <ButtonGroup
-                  variant='contained'
-                  aria-label='outlined primary button group'
-                >
-                  <Button onClick={() => increase(product)}>+</Button>
-                  <Button onClick={() => decrease(product)}>-</Button>
-                  <Button onClick={() => remove(product)}>x</Button>
-                </ButtonGroup>
-              </ListItem>
+            {productArray.map((cartItem) => (
+              <CartDrawerItem key={cartItem.product.id} cartItem={cartItem} />
             ))}
           </List>
-          <Typography>Total price: {totalPrice}</Typography>
+          <Divider />
+          <Typography>Total price: {formatPrice(totalPrice)}</Typography>
         </Box>
       </Drawer>
     </>
