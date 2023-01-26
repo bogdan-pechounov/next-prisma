@@ -16,3 +16,7 @@ export function parseQueryString(string: string | string[] | undefined) {
     return string
   }
 }
+
+export function clamp(num: number, min: number, max: number) {
+  return Math.min(Math.max(num, min), max)
+}

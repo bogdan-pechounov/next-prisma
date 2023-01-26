@@ -24,18 +24,15 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { cart, add } = useCart()
+  const { cart, add, remove } = useCart()
 
   //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
 
   function AddToCart() {
-    if (product.id in cart.products) {
+    if (product.id in cart.items) {
       return (
-        <Button
-          variant='outlined'
-          onClick={() => dispatch(cartSlice.actions.remove(product))}
-        >
+        <Button variant='outlined' onClick={() => remove(product)}>
           Remove from cart
         </Button>
       )

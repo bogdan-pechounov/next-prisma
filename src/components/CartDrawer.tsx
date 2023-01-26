@@ -10,13 +10,22 @@ import {
 } from '@mui/material'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
-import React, { useState, useMemo } from 'react'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
 import CartIcon from './CartIcon'
 
 function CartDrawer() {
   const [open, setOpen] = useState(false)
-  const { productArray, totalPrice } = useCart()
+  const { productArray, totalPrice, remove, increase, decrease } = useCart()
   const dispatch = useAppDispatch()
+
+  //load cart items
+  useEffect(() => {
+    axios.get('/api/cart').then(({ data: cart }) => {
+      console.log(cart)
+      dispatch(cartSlice.actions.set(cart))
+    })
+  }, [])
 
   return (
     <>
@@ -24,34 +33,18 @@ function CartDrawer() {
       <Drawer anchor='right' open={open} onClose={() => setOpen(false)}>
         <Box width={500}>
           <List>
-            {productArray.map((product) => (
+            {productArray.map(({ product, quantity }) => (
               <ListItem key={product.id}>
                 <ListItemText
-                  primary={`${product.title} | ${product.price} | ${product.quantity}`}
+                  primary={`${product.title} | ${product.price} | ${quantity}`}
                 />
                 <ButtonGroup
                   variant='contained'
                   aria-label='outlined primary button group'
                 >
-                  <Button
-                    onClick={() =>
-                      dispatch(cartSlice.actions.increase(product))
-                    }
-                  >
-                    +
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      dispatch(cartSlice.actions.decrease(product))
-                    }
-                  >
-                    -
-                  </Button>
-                  <Button
-                    onClick={() => dispatch(cartSlice.actions.remove(product))}
-                  >
-                    x
-                  </Button>
+                  <Button onClick={() => increase(product)}>+</Button>
+                  <Button onClick={() => decrease(product)}>-</Button>
+                  <Button onClick={() => remove(product)}>x</Button>
                 </ButtonGroup>
               </ListItem>
             ))}
