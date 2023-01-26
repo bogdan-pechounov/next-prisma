@@ -8,10 +8,11 @@ import {
   ListItemText,
   Typography,
   ListItemButton,
-  ListItemIcon,
   Box,
   Stack,
+  Icon,
 } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import Link from 'next/link'
 import React from 'react'
 
@@ -29,7 +30,19 @@ function CartDrawerItem({
       <ListItemButton>
         <Link href={`/product/${product.id}`} style={{ width: '100%' }}>
           {/* Title */}
-          <ListItemText primary={product.title} />
+          <Stack direction='row' pb={1}>
+            <ListItemText primary={product.title} />
+            {/* Remove */}
+            <Button
+              color='error'
+              onClick={(e) => {
+                e.preventDefault()
+                remove(product)
+              }}
+            >
+              <CloseIcon />
+            </Button>
+          </Stack>
           {/* Button group */}
           <Stack direction='row'>
             <Box>
@@ -45,7 +58,6 @@ function CartDrawerItem({
                 <Button onClick={() => decrease(product)}>-</Button>
                 <Button variant='outlined'>{quantity}</Button>
                 <Button onClick={() => increase(product)}>+</Button>
-                {/* <Button onClick={() => remove(product)}>x</Button> */}
               </ButtonGroup>
             </Box>
           </Stack>

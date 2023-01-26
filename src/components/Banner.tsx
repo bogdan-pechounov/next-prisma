@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors'
 import { Stack } from '@mui/system'
 import { Product } from '@prisma/client'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {
@@ -32,7 +33,7 @@ function Banner({ bannerProduct }: Props) {
   return (
     <BannerContainer marginBottom={5}>
       <BannerContent direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        <Box>
+        <Link href={`/product/${bannerProduct.id}`}>
           <Image
             src={bannerProduct?.imgUrl}
             width={350}
@@ -46,7 +47,7 @@ function Banner({ bannerProduct }: Props) {
               background: 'white',
             }}
           />
-        </Box>
+        </Link>
         <Box>
           <Title variant='h5'>Return to School</Title>
           <Title variant='h1'>Laptop Sales</Title>
