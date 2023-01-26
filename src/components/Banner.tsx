@@ -29,18 +29,14 @@ const Title = styled(Typography)(() => ({
 const Description = styled(Typography)(() => ({}))
 
 function Banner({ bannerProduct }: Props) {
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.up('sm'))
-  const width = matches ? 400 : 300
-
   return (
-    <BannerContainer>
+    <BannerContainer marginBottom={5}>
       <BannerContent direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <Box>
           <Image
             src={bannerProduct?.imgUrl}
-            width={width}
-            height={width}
+            width={350}
+            height={350}
             alt={bannerProduct?.title}
             // style={{ mixBlendMode: 'multiply' }} // make background transparent
             priority

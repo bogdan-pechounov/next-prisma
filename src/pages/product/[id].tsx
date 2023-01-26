@@ -24,12 +24,10 @@ type ProductDetailsProps = {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { cart } = useCart()
+  const { cart, add } = useCart()
 
   //loading indicator
   if (router.isFallback) return <LinearIndeterminate />
-
-  console.log(product)
 
   function AddToCart() {
     if (product.id in cart.products) {
@@ -43,10 +41,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       )
     }
     return (
-      <Button
-        variant='outlined'
-        onClick={() => dispatch(cartSlice.actions.add(product))}
-      >
+      <Button variant='outlined' onClick={() => add(product)}>
         Add to cart
       </Button>
     )

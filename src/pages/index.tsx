@@ -1,12 +1,10 @@
 import Banner from '@/components/Banner'
-import LinearIndeterminate from '@/components/LinearIndeterminate'
 import ProductRow from '@/components/ProductRow'
 import prisma from '@/lib/prisma'
-import { Box, Container, styled } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import { Product } from '@prisma/client'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 type Props = {
   bannerProduct: Product | null
@@ -41,18 +39,24 @@ const POPULAR_CATEGORIES = [
 
 export default function Home({ bannerProduct, categories }: Props) {
   return (
-    <Container>
-      {bannerProduct && <Banner bannerProduct={bannerProduct} />}
-      {categories.map(({ category, products }) => (
-        <Box key={category} mb={2}>
-          <ProductRow title={category} products={products} />
-        </Box>
-      ))}
-    </Container>
+    <>
+      <Head>
+        <title>E-lectronics</title>
+        <meta property='og:title' content='My page title' key='title' />
+      </Head>
+      <Container>
+        {bannerProduct && <Banner bannerProduct={bannerProduct} />}
+        {categories.map(({ category, products }) => (
+          <Box key={category} mb={2}>
+            <ProductRow title={category} products={products} />
+          </Box>
+        ))}
+      </Container>
+    </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getStaticProps: GetStaticProps<Props> = async () => {
   const [bannerProduct, categories] = await Promise.all([
     prisma.product.findUnique({
       where: { id: 'B00KYB9Q64' },
@@ -77,5 +81,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
       bannerProduct,
       categories,
     },
+    revalidate: 30,
   }
 }
