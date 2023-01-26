@@ -47,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function SearchBar() {
   const router = useRouter()
-  const searchQuery = parseQueryString(router.query.search)
+  const searchQuery = parseQueryString(router.query.q)
   const [search, setSearch] = useState(searchQuery ?? '')
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function SearchBar() {
     } else if (searchQuery) {
       //delete search query in url
       const { query } = router
-      delete query.search
+      delete query.q
       router.push({ query })
     }
   }, [search])

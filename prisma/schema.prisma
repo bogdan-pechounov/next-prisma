@@ -40,13 +40,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  cart          CartItem[]
 }
 
 model VerificationToken {
@@ -59,7 +60,7 @@ model VerificationToken {
 
 // products
 model Product {
-  id               String    @id @default(uuid())
+  id               String     @id @default(uuid())
   title            String
   imgUrl           String
   description      String
@@ -67,12 +68,25 @@ model Product {
   categories       String[]
   brand            String
   salesRank        Json?
-  alsoBought       Product[] @relation("alsoBought")
-  alsoBought_      Product[] @relation("alsoBought")
-  alsoViewed       Product[] @relation("alsoViewed")
-  alsoViewed_      Product[] @relation("alsoViewed")
-  boughtTogether   Product[] @relation("boughtTogether")
-  boughtTogether_  Product[] @relation("boughtTogether")
-  buyAfterViewing  Product[] @relation("buyAfterViewing")
-  buyAfterViewing_ Product[] @relation("buyAfterViewing")
+  alsoBought       Product[]  @relation("alsoBought")
+  alsoBought_      Product[]  @relation("alsoBought")
+  alsoViewed       Product[]  @relation("alsoViewed")
+  alsoViewed_      Product[]  @relation("alsoViewed")
+  boughtTogether   Product[]  @relation("boughtTogether")
+  boughtTogether_  Product[]  @relation("boughtTogether")
+  buyAfterViewing  Product[]  @relation("buyAfterViewing")
+  buyAfterViewing_ Product[]  @relation("buyAfterViewing")
+  inCart           CartItem[]
+}
+
+//cart
+model CartItem {
+  id        String  @id @default(uuid())
+  user      User?   @relation(fields: [userId], references: [id])
+  userId    String
+  quantity  Int     @default(1)
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@unique([userId, productId])
 }
